@@ -1,0 +1,1 @@
+function uglify(){console.log("uglify file");console.log(0)}
