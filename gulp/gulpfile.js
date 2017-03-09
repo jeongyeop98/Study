@@ -2,6 +2,31 @@ var gulp = require('gulp')
 var uglify = require('gulp-uglify')
 var minifyCss = require('gulp-minify-css')
 var gutil = require('gulp-util')
+var concat = require('gulp-concat')
+var rename = require('gulp-rename')
+var sourcemaps = require('gulp-sourcemaps')
+
+gulp.task('sourcemapsTest', function() {
+  gulp.src('./concat/*.js')
+    .pipe(sourcemaps.init())
+      .pipe(concat('korea2.js'))
+      .pipe(uglify())
+      .pipe(rename('korea2.min.js'))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('dist'))
+})
+
+gulp.task('renameTest', function() {
+  gulp.src('sample.js')
+    .pipe(rename('rename.js'))
+    .pipe(gulp.dest('./dist'))
+})
+
+gulp.task('concatTest', function() {
+  gulp.src('./concat/*.js')
+    .pipe(concat('korea.js'))
+    .pipe(gulp.dest('./dist'))
+})
 
 gulp.task('logging', function() {
   gutil.log('stuff happened', 'Really it did', gutil.colors.yellow('123'))
