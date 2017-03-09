@@ -7,7 +7,7 @@ gulp.task('scripts', function() {
     .pipe(gulp.dest('build/js'))
 })
 
-gulp.tast('hello', function(){
+gulp.task('hello', function(){
   console.log('hello')
 })
 
