@@ -4,6 +4,31 @@ var plugins = gulpLoadPlugins(
   
 )
 var sass = require('gulp-ruby-sass')
+var browserSync = require('browser-sync').create()
+var reload = browserSync.reload
+
+gulp.task('browser-sync', function() {
+  browserSync.init({
+    server: {
+      baseDir: './'
+    }
+  })
+  gulp.watch('css/*.scss', ['sassForbs'])
+  gulp.watch('./*.html').on('change', reload)
+})
+
+gulp.task('sassForbs', function() {
+  sass('css', {sourcemap: true})
+    .on('error', function(err) {
+      console.error('Errorrrrrrrr!', err.message)
+    })
+    .pipe(plugins.sourcemaps.wrtie('./'), {
+      includeContent: false,
+      sourceRoot: 'css'
+    })
+    .pipe(gulp.dest('build/css'))
+    .pipe(browserSync.stream({match: '**/*.css'}))
+})
 
 gulp.task('watch', function() {
   gulp.watch('css/*.scss', ['sassTest'])
