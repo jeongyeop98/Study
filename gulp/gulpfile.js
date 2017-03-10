@@ -6,6 +6,16 @@ var concat = require('gulp-concat')
 var rename = require('gulp-rename')
 var sourcemaps = require('gulp-sourcemaps')
 var plumber = require('gulp-plumber')
+var autoprefixer = require('gulp-autoprefixer')
+
+gulp.task('autoprefixerTest', function() {
+  gulp.src('css/app.css')
+    .pipe(autoprefixer({
+        browsers: ['last 2 versions'],
+        cascade: false
+    }))
+    .pipe(gulp.dest('./dist'))
+})
 
 gulp.task('plumberTest', function() {
   gulp.src('./js/plumberTest.js')
