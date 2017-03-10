@@ -5,6 +5,10 @@ var plugins = gulpLoadPlugins(
 )
 var sass = require('gulp-ruby-sass')
 
+gulp.task('watch', function() {
+  gulp.watch('css/*.scss', ['sassTest'])
+})
+
 gulp.task('sassTest', function() {
   sass('css/*.scss')
     .on('error', function(err) {
