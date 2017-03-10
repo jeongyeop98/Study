@@ -5,6 +5,20 @@ var gutil = require('gulp-util')
 var concat = require('gulp-concat')
 var rename = require('gulp-rename')
 var sourcemaps = require('gulp-sourcemaps')
+var plumber = require('gulp-plumber')
+
+gulp.task('plumberTest', function() {
+  gulp.src('./js/plumberTest.js')
+    .pipe(plumber({
+      errorHandler: onError
+    }))
+    .pipe(uglify())
+    .pipe(gulp.dest('build/js'))
+})
+
+var onError = function(err) {
+    console.log(err)
+}
 
 gulp.task('sourcemapsTest', function() {
   gulp.src('./concat/*.js')
