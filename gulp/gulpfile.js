@@ -1,16 +1,12 @@
 var gulp = require('gulp')
-var uglify = require('gulp-uglify')
-var minifyCss = require('gulp-minify-css')
-var gutil = require('gulp-util')
-var concat = require('gulp-concat')
-var rename = require('gulp-rename')
-var sourcemaps = require('gulp-sourcemaps')
-var plumber = require('gulp-plumber')
-var autoprefixer = require('gulp-autoprefixer')
+var gulpLoadPlugins = require('gulp-load-plugins')
+var plugins = gulpLoadPlugins(
+  
+)
 
 gulp.task('autoprefixerTest', function() {
   gulp.src('css/app.css')
-    .pipe(autoprefixer({
+    .pipe(plugins.autoprefixer({
         browsers: ['last 2 versions'],
         cascade: false
     }))
@@ -19,7 +15,7 @@ gulp.task('autoprefixerTest', function() {
 
 gulp.task('plumberTest', function() {
   gulp.src('./js/plumberTest.js')
-    .pipe(plumber({
+    .pipe(plugins.plumber({
       errorHandler: onError
     }))
     .pipe(uglify())
@@ -33,31 +29,31 @@ var onError = function(err) {
 gulp.task('sourcemapsTest', function() {
   gulp.src('./concat/*.js')
     .pipe(sourcemaps.init())
-      .pipe(concat('korea2.js'))
+      .pipe(plugins.concat('korea2.js'))
       .pipe(uglify())
-      .pipe(rename('korea2.min.js'))
+      .pipe(plugins.rename('korea2.min.js'))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('dist'))
 })
 
 gulp.task('renameTest', function() {
   gulp.src('sample.js')
-    .pipe(rename('rename.js'))
+    .pipe(plugins.rename('rename.js'))
     .pipe(gulp.dest('./dist'))
 })
 
 gulp.task('concatTest', function() {
   gulp.src('./concat/*.js')
-    .pipe(concat('korea.js'))
+    .pipe(plugins.concat('korea.js'))
     .pipe(gulp.dest('./dist'))
 })
 
 gulp.task('logging', function() {
-  gutil.log('stuff happened', 'Really it did', gutil.colors.yellow('123'))
-  gutil.beep()
+  plugins.gutil.log('stuff happened', 'Really it did', gutil.colors.yellow('123'))
+  plugins.gutil.beep()
   
   var newPath = gutil.replaceExtension('sample.txt', '.js')
-  gutil.log('replaceExtension : ', newPath)
+  plugins.gutil.log('replaceExtension : ', newPath)
   
   var opt = {
     name: 'todd',
@@ -65,12 +61,12 @@ gulp.task('logging', function() {
   }
   
   var tester = gutil.template('test : <%= name %> , file : <%= file %>', opt)
-  gutil.log('template : ', gutil.colors.red(tester))
+  plugins.gutil.log('template : ', plugins.gutil.colors.red(tester))
 })
 
 gulp.task('minifyCss', function() {
   gulp.src('css/*.css')
-    .pipe(minifyCss({compatibility: 'ie8'}))
+    .pipe(plugins.minifyCss({compatibility: 'ie8'}))
     .pipe(gulp.dest('dist'))
 })
 
