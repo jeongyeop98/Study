@@ -3,6 +3,15 @@ var gulpLoadPlugins = require('gulp-load-plugins')
 var plugins = gulpLoadPlugins(
   
 )
+var sass = require('gulp-ruby-sass')
+
+gulp.task('sassTest', function() {
+  sass('css/*.scss')
+    .on('error', function(err) {
+      console.error('Error!', err.message)
+    })
+    .pipe(gulp.dest('build/css'))
+})
 
 gulp.task('autoprefixerTest', function() {
   gulp.src('css/app.css')
